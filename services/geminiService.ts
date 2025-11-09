@@ -85,7 +85,7 @@ export async function reverseGeocode(location: UserLocation): Promise<string> {
 }
 
 export async function discoverPlaces(category: PlaceType, location: UserLocation | null): Promise<DiscoveredPlace[]> {
-    const prompt = `List 5 popular ${category.name} near the user. Your response must be a valid JSON array of objects. Each object must have a "name", a "description", and a unique single "emoji" that represents that specific place. Only output the raw JSON array, with no other text, explanation, or markdown formatting.`;
+    const prompt = `List 5 popular ${category.name} near the user. Your response must be a valid JSON array of objects. Each object must have a "name", a "description", a unique single "emoji" that represents that specific place, and a "rating" (number between 0 and 5, representing the average user rating). Only output the raw JSON array, with no other text, explanation, or markdown formatting.`;
 
     const toolConfig = location ? {
         retrievalConfig: {
@@ -130,7 +130,8 @@ export async function discoverPlaces(category: PlaceType, location: UserLocation
             id: `${category.id}-${index}`,
             name: place.name,
             description: place.description,
-            emoji: place.emoji || category.emoji // Fallback to category emoji
+            emoji: place.emoji || category.emoji, // Fallback to category emoji
+            rating: place.rating ? parseFloat(place.rating) : undefined
         }));
 
     } catch (error) {

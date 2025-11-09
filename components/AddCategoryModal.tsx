@@ -36,22 +36,29 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({ isOpen, onCl
 
   return (
     <div 
-      className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in" 
+      className="fixed inset-0 bg-slate-900/85 backdrop-blur-md flex items-center justify-center z-50 animate-fade-in" 
       onClick={onClose} 
       role="dialog" 
       aria-modal="true" 
       aria-labelledby="add-category-title"
     >
-      <div className="bg-slate-800 rounded-lg p-6 w-full max-w-sm shadow-2xl border border-slate-700" onClick={e => e.stopPropagation()}>
-        <div className="flex justify-between items-center mb-4">
-          <h2 id="add-category-title" className="text-xl font-bold text-white">Add New Category</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white" aria-label="Close dialog">
+      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 w-full max-w-md shadow-2xl border border-slate-600/50 animate-fade-in" onClick={e => e.stopPropagation()}>
+        <div className="flex justify-between items-center mb-5">
+          <div className="flex items-center gap-2">
+            <div className="text-2xl">➕</div>
+            <h2 id="add-category-title" className="text-xl font-bold text-white">Add New Category</h2>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="text-slate-400 hover:text-cyan-300 transition-colors p-1 hover:bg-slate-700/50 rounded-full" 
+            aria-label="Close dialog"
+          >
             <CloseIcon className="w-6 h-6" />
           </button>
         </div>
         <form onSubmit={handleSubmit}>
-          <p className="text-sm text-slate-400 mb-4">
-            Enter a category like "Coffee Shops" or "Bookstores" and we'll generate the rest!
+          <p className="text-sm text-slate-300 mb-4 leading-relaxed">
+            Enter a category like <span className="text-cyan-400 font-semibold">"Coffee Shops"</span> or <span className="text-cyan-400 font-semibold">"Bookstores"</span> and we'll generate the rest with AI magic! ✨
           </p>
           <label htmlFor="category-name-input" className="sr-only">Category Name</label>
           <input
@@ -60,16 +67,29 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({ isOpen, onCl
             value={categoryName}
             onChange={e => setCategoryName(e.target.value)}
             placeholder="e.g., Bookstores"
-            className="w-full bg-slate-700 p-2.5 text-sm text-slate-200 placeholder-slate-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full bg-slate-700/50 backdrop-blur-sm border border-slate-600/50 p-3 text-sm text-slate-100 placeholder-slate-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
             autoFocus
             disabled={isLoading}
           />
-          {error && <p className="mt-2 text-sm text-red-400" role="alert">{error}</p>}
+          {error && (
+            <p className="mt-3 text-sm text-red-400 bg-red-900/20 border border-red-800/50 px-3 py-2 rounded-lg animate-fade-in" role="alert">
+              {error}
+            </p>
+          )}
           <div className="mt-6 flex justify-end gap-3">
-            <button type="button" onClick={onClose} disabled={isLoading} className="px-4 py-2 bg-slate-600 hover:bg-slate-500 rounded-md text-sm font-semibold transition-colors">
+            <button 
+              type="button" 
+              onClick={onClose} 
+              disabled={isLoading} 
+              className="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 rounded-xl text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-600"
+            >
               Cancel
             </button>
-            <button type="submit" disabled={!categoryName.trim() || isLoading} className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 disabled:bg-slate-600 disabled:cursor-not-allowed rounded-md text-sm font-semibold text-white transition-colors flex items-center justify-center min-w-[80px]">
+            <button 
+              type="submit" 
+              disabled={!categoryName.trim() || isLoading} 
+              className="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 flex items-center justify-center min-w-[80px] shadow-lg disabled:opacity-50"
+            >
               {isLoading ? <LoadingSpinner /> : 'Add'}
             </button>
           </div>

@@ -11,6 +11,7 @@ export interface DiscoveredPlace {
   name: string;
   description: string;
   emoji: string;
+  rating?: number; // Rating out of 5
 }
 
 export type NodeItem = PlaceType | DiscoveredPlace;

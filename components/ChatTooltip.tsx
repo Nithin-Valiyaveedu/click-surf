@@ -22,7 +22,7 @@ const TypingIndicator: React.FC = () => (
 );
 
 const SourceLinks: React.FC<{ sources: GroundingSource[] }> = ({ sources }) => (
-    <div className="mt-1.5 flex flex-wrap gap-1.5 items-center">
+    <div className="mt-2 pt-2 border-t border-slate-600/30 flex flex-wrap gap-2 items-center">
         <LinkIcon className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
         {sources.map((source, index) => (
             <a
@@ -30,7 +30,7 @@ const SourceLinks: React.FC<{ sources: GroundingSource[] }> = ({ sources }) => (
                 href={source.uri}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs bg-slate-700 hover:bg-slate-600 text-cyan-300 px-2 py-0.5 rounded-full transition-colors duration-200 truncate"
+                className="text-xs bg-slate-800/60 hover:bg-slate-700/80 text-cyan-300 hover:text-cyan-200 px-2.5 py-1 rounded-full transition-all duration-200 truncate border border-slate-600/50 hover:border-cyan-500/50 hover:scale-105"
                 title={source.title}
             >
                 {new URL(source.uri).hostname}
@@ -123,47 +123,72 @@ export const ChatTooltip: React.FC<ChatTooltipProps> = ({ place, position, userL
 
   return (
     <>
-      {isMobile && <div className="fixed inset-0 bg-black/60 z-40 animate-fade-in" onClick={onClose} />}
+      {isMobile && <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 animate-fade-in" onClick={onClose} />}
       <div 
         style={style} 
-        className={`${containerClasses} bg-slate-800/90 backdrop-blur-md flex flex-col border-slate-700 animate-fade-in`}
+        className={`${containerClasses} bg-slate-800/95 backdrop-blur-xl flex flex-col border-slate-600/50 animate-fade-in shadow-2xl`}
       >
-        <header className="flex items-center justify-between p-3 border-b border-slate-700 flex-shrink-0">
-          <h2 className="text-sm font-bold truncate pr-2">{place.name}</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
+        <header className="flex items-center justify-between gap-3 p-4 border-b border-slate-700/50 flex-shrink-0 bg-gradient-to-r from-slate-800/50 to-slate-900/50">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <div className="text-xl flex-shrink-0">{place.emoji}</div>
+            <h2 className="text-base font-bold text-cyan-100 truncate">{place.name}</h2>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="text-slate-400 hover:text-cyan-300 transition-colors p-1 hover:bg-slate-700/50 rounded-full flex-shrink-0"
+          >
             <CloseIcon className="w-5 h-5" />
           </button>
         </header>
         
-        <div className="flex-1 overflow-y-auto p-3 space-y-3 text-sm">
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 text-sm bg-gradient-to-b from-slate-900/20 to-slate-900/40">
           {messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-xs p-2 rounded-lg ${msg.role === 'user' ? 'bg-cyan-600 text-white rounded-br-none' : 'bg-slate-700 text-slate-200 rounded-bl-none'}`}>
-                <p className="whitespace-pre-wrap break-words">{msg.text}</p>
+            <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}>
+              <div className={`max-w-[85%] p-3 rounded-2xl shadow-lg ${
+                msg.role === 'user' 
+                  ? 'bg-gradient-to-br from-cyan-500 to-cyan-600 text-white rounded-br-md' 
+                  : 'bg-slate-700/80 backdrop-blur-sm text-slate-100 rounded-bl-md border border-slate-600/50'
+              }`}>
+                <p className="whitespace-pre-wrap break-words leading-relaxed">{msg.text}</p>
                 {msg.sources && msg.sources.length > 0 && <SourceLinks sources={msg.sources} />}
               </div>
             </div>
           ))}
-          {isLoading && messages.length > 0 && <div className="flex justify-start"><TypingIndicator/></div>}
-          {isLoading && messages.length === 0 && <div className="text-slate-400 text-center p-4">Contacting assistant...</div>}
+          {isLoading && messages.length > 0 && (
+            <div className="flex justify-start animate-fade-in">
+              <div className="bg-slate-700/80 backdrop-blur-sm rounded-2xl rounded-bl-md px-4 py-2 border border-slate-600/50">
+                <TypingIndicator/>
+              </div>
+            </div>
+          )}
+          {isLoading && messages.length === 0 && (
+            <div className="text-slate-400 text-center p-6 animate-pulse">
+              <div className="inline-flex items-center gap-2">
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+              </div>
+              <p className="mt-2">Connecting to assistant...</p>
+            </div>
+          )}
           <div ref={messagesEndRef} />
         </div>
 
-        <form onSubmit={handleSendMessage} className="p-2 border-t border-slate-700 flex-shrink-0">
-          <div className="flex items-center bg-slate-700 rounded-md pr-1.5">
+        <form onSubmit={handleSendMessage} className="p-3 border-t border-slate-700/50 flex-shrink-0 bg-slate-900/30">
+          <div className="flex items-center bg-slate-700/50 backdrop-blur-sm rounded-xl border border-slate-600/50 overflow-hidden hover:border-cyan-500/50 transition-colors">
             <input
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="Ask a question..."
-              className="w-full bg-transparent p-2 text-sm text-slate-200 placeholder-slate-400 focus:outline-none"
+              className="w-full bg-transparent px-4 py-2.5 text-sm text-slate-200 placeholder-slate-400 focus:outline-none"
               disabled={isLoading}
             />
             <button
               type="submit"
               disabled={isLoading || !userInput.trim()}
-              className="bg-cyan-600 hover:bg-cyan-500 disabled:bg-slate-600 disabled:cursor-not-allowed rounded-md p-1.5 transition-colors"
+              className="bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed rounded-lg m-1 p-2 transition-all duration-300 hover:scale-105 shadow-lg"
             >
-              <SendIcon className="w-4 h-4 text-white" />
+              <SendIcon className="w-5 h-5 text-white" />
             </button>
           </div>
         </form>

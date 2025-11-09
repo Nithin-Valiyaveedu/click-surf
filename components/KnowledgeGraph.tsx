@@ -1,23 +1,29 @@
-import React, { useRef, useState, useEffect } from 'react';
-import type { NodeItem } from '../types';
-import { GraphNode } from './GraphNode';
+import React, { useRef, useState, useEffect } from "react";
+import type { NodeItem } from "../types";
+import { GraphNode } from "./GraphNode";
 
 interface KnowledgeGraphProps {
   nodes: NodeItem[];
   centerNodeLabel: React.ReactNode;
-  onNodeClick: (node: NodeItem, position?: { x: number, y: number }) => void;
+  onNodeClick: (node: NodeItem, position?: { x: number; y: number }) => void;
   onBackClick?: () => void;
   onNodeRemove?: (node: NodeItem) => void;
 }
 
-export const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({ nodes, centerNodeLabel, onNodeClick, onBackClick, onNodeRemove }) => {
+export const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({
+  nodes,
+  centerNodeLabel,
+  onNodeClick,
+  onBackClick,
+  onNodeRemove,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(0);
 
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
-      const observer = new ResizeObserver(entries => {
+      const observer = new ResizeObserver((entries) => {
         if (entries[0]) {
           setSize(entries[0].contentRect.width);
         }
@@ -26,7 +32,7 @@ export const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({ nodes, centerNod
       return () => observer.disconnect();
     }
   }, []);
-  
+
   if (size === 0) {
     return <div ref={containerRef} className="relative w-full h-full" />;
   }
@@ -38,67 +44,56 @@ export const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({ nodes, centerNod
 
   const nodePositions = nodes.map((_, index) => {
     const angle = (index / nodes.length) * 2 * Math.PI - Math.PI / 2;
-    const x = center + radius * Math.cos(angle) - (nodeVisualSize / 2);
-    const y = center + radius * Math.sin(angle) - (nodeVisualSize / 2);
+    const x = center + radius * Math.cos(angle) - nodeVisualSize / 2;
+    const y = center + radius * Math.sin(angle) - nodeVisualSize / 2;
     return { x, y };
   });
 
   const handleNodeClick = (node: NodeItem, index: number) => {
     if (containerRef.current) {
-        const containerRect = containerRef.current.getBoundingClientRect();
-        const pos = nodePositions[index];
-        const absoluteX = containerRect.left + pos.x + nodeVisualSize;
-        const absoluteY = containerRect.top + pos.y + (nodeVisualSize / 2);
-        onNodeClick(node, { x: absoluteX, y: absoluteY });
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const pos = nodePositions[index];
+      const absoluteX = containerRect.left + pos.x + nodeVisualSize;
+      const absoluteY = containerRect.top + pos.y + nodeVisualSize / 2;
+      onNodeClick(node, { x: absoluteX, y: absoluteY });
     } else {
-        onNodeClick(node);
+      onNodeClick(node);
     }
   };
-
 
   return (
     <div ref={containerRef} className="relative w-full h-full">
       {/* Central Node */}
       <div
-        className="absolute rounded-full flex flex-col items-center justify-center text-center border-2 border-cyan-500 shadow-xl bg-cyan-500/20 shadow-cyan-500/20"
-        style={{ 
+        className="absolute rounded-full flex flex-col items-center justify-center text-center border-2 border-cyan-400/50 shadow-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-sm animate-fade-in"
+        style={{
           width: `${centerNodeSize}px`,
           height: `${centerNodeSize}px`,
           top: `${center - centerNodeSize / 2}px`,
           left: `${center - centerNodeSize / 2}px`,
+          boxShadow:
+            "0 0 40px rgba(34, 211, 238, 0.3), inset 0 0 20px rgba(34, 211, 238, 0.1)",
         }}
       >
-        {typeof centerNodeLabel === 'string' ? (
-          <div className="text-lg font-bold max-w-[120px] truncate" title={centerNodeLabel}>
+        {typeof centerNodeLabel === "string" ? (
+          <div
+            className="text-lg font-bold max-w-[140px] truncate"
+            title={centerNodeLabel}
+          >
             {centerNodeLabel}
           </div>
         ) : (
           centerNodeLabel
         )}
       </div>
-      
       {onBackClick && (
-          <button onClick={onBackClick} className="absolute top-2 left-2 z-10 bg-slate-700 hover:bg-slate-600 text-white font-bold py-1 px-3 rounded-full text-sm transition-colors">
-              &larr; Back
-          </button>
+        <button
+          onClick={onBackClick}
+          className="absolute top-2 left-2 z-10 bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700 border border-slate-600 hover:border-cyan-500/50 text-white font-semibold py-2 px-4 rounded-full text-sm transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          ← Back
+        </button>
       )}
-
-      {/* Lines/Edges */}
-      <svg className="absolute top-0 left-0 w-full h-full" style={{ zIndex: -1 }}>
-        {nodePositions.map((pos, index) => (
-          <line
-            key={`line-${index}`}
-            x1={center}
-            y1={center}
-            x2={pos.x + (nodeVisualSize / 2)}
-            y2={pos.y + (nodeVisualSize / 2)}
-            stroke="rgba(71, 85, 105, 0.5)"
-            strokeWidth="2"
-            className="animate-fade-in"
-          />
-        ))}
-      </svg>
-
       {/* Place Nodes */}
       {nodes.map((node, index) => (
         <GraphNode

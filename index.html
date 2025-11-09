@@ -5,28 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ClickSurf</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0"
-  }
-}
-</script>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0"
+        }
+      }
+    </script>
     <style>
       @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
-        100% { transform: translateY(0px); }
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
       }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
       .animate-float {
         animation: float 6s ease-in-out infinite;
       }
+
+      .animate-fade-in {
+        animation: fade-in 0.4s ease-out forwards;
+      }
+
+      .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient 4s ease infinite;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.5);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(71, 85, 105, 0.8);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.9);
+      }
+
+      ::selection {
+        background-color: rgba(34, 211, 238, 0.3);
+        color: white;
+      }
     </style>
-<link rel="stylesheet" href="/index.css">
-</head>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
   <body class="bg-slate-900 text-white">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
