@@ -16,27 +16,19 @@ See ClickSurf in action with a complete walkthrough of all features!
 
 ---
 
-### Category Selection & Loading
+### Home - Interactive Knowledge Graph
 
-<img src="images/1.png" alt="Loading places in category" width="800"/>
+<img src="images/home.png" alt="ClickSurf home page with interactive knowledge graph" width="800"/>
 
-_Select a category and watch as ClickSurf discovers nearby places_
-
----
-
-### Interactive Place Discovery
-
-<img src="images/2.png" alt="Exploring places with AI chat" width="800"/>
-
-_Click any place to open an AI-powered chat and to it with our assistant feature_
+_Explore categories visually through an interactive circular knowledge graph. Click any category to discover nearby places._
 
 ---
 
-### AI-Powered Conversations
+### Discover & Chat with AI
 
-<img src="images/3.png" alt="Chatting with AI about a place" width="800"/>
+<img src="images/innerpage.png" alt="Discovering places and chatting with AI assistant" width="800"/>
 
-_Ask questions and get instant, intelligent responses about hours, amenities, and more_
+_Click on any discovered place to open an AI-powered chat. Ask questions and get instant, intelligent responses about hours, amenities, directions, and more!_
 
 </div>
 
