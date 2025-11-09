@@ -1,0 +1,7 @@
+{
+  "name": "ClickSurf",
+  "description": "Surf your city in just clicks. Visually explore and chat about places like hotels, clubs, and hospitals, with up-to-date, localized info from Gemini.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
