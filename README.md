@@ -26,7 +26,7 @@ _Explore categories visually through an interactive circular knowledge graph. Cl
 
 ### Discover & Chat with AI
 
-<img src="images/innerpage.png" alt="Discovering places and chatting with AI assistant" width="800"/>
+<img src="images/home-inner.png" alt="Discovering places and chatting with AI assistant" width="800"/>
 
 _Click on any discovered place to open an AI-powered chat. Ask questions and get instant, intelligent responses about hours, amenities, directions, and more!_
 
