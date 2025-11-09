@@ -10,7 +10,7 @@ ClickSurf is an AI-powered location discovery app that helps you explore places 
 
 ### 🎥 Video Walkthrough
 
-**[Watch the Full Demo Video →](https://drive.google.com/file/d/120MDY-D-DpBH0jHbYf0HsOMhA90rcm8n/view?usp=sharing)**
+**[Watch the Full Demo Video →](https://drive.google.com/file/d/1FTF2YrH2EbqtPpjWWsK-wvsvjlQzgRk5/view?usp=sharing)**
 
 See ClickSurf in action with a complete walkthrough of all features!
 
