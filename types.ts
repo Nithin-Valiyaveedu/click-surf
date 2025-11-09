@@ -10,21 +10,20 @@ export interface DiscoveredPlace {
   id: string;
   name: string;
   description: string;
-  emoji: string; // Add emoji for visual consistency
+  emoji: string;
 }
 
 export type NodeItem = PlaceType | DiscoveredPlace;
 
-
 export interface GroundingSource {
-  type: 'web' | 'maps';
+  type: "web" | "maps";
   uri: string;
   title: string;
 }
 
 export interface ChatMessage {
   id: string;
-  role: 'user' | 'model';
+  role: "user" | "model";
   text: string;
   sources?: GroundingSource[];
 }
